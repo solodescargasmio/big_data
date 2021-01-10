@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'big_data.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'independencia',
+        'NAME': 'itsp',
         'PORT' : '3306',
         'USER': 'root',
-        'PASSWORD': 'eranoespico1234',
+        'PASSWORD': '**********',
     }
 }
 
