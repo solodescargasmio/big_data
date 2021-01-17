@@ -23,7 +23,8 @@ def pi(request):
         .getOrCreate() 
     df=spark.read.csv("C:/Users/yo/Desktop/archivo.csv",header=False,sep=";")
     df.show()
-
+    #alumno=Alumno.objects.get()
+    
     return HttpResponse(df)       
 """ partitions = 2
     if math.isnan(partitions):
@@ -41,17 +42,48 @@ def pi(request):
     return HttpResponse("Pi is roughly %f" % (4.0 * count / n))"""
 
 def consulta(request):
-    	findspark.init("D:\Spark\spark-2.4.7-bin-hadoop2.7")
-    	from pyspark import SparkConfig
-    	spark = SparkSession\
-    			.builder\
-    			.appName("Consultas")\
-    			.getOrCreate() 
-    	df=spark.read.csv("C:/Users/yo/Desktop/archivo.csv",header=False,sep=";")
-    	df.show()
-    	return HttpResponse(df.show())		   
+	findspark.init()
+	from pyspark import SparkConf
+	spark = SparkSession\
+			.builder\
+			.appName("Consultas")\
+			.master("local[*]")\
+			.config("spark.jars","file:///D:/Spark/mysqlconector/mysql-connector/mysql-connector-java-5.1.49.jar")\
+			.config("spark.executor.extraClassPath","file:///D:/Spark/mysqlconector/mysql-connector/mysql-connector-java-5.1.49.jar")\
+			.config("spark.executor.extraLibrary","file:///D:/Spark/mysqlconector/mysql-connector/mysql-connector-java-5.1.49.jar")\
+			.config("spark.driver.extraClassPath","file:///D:/Spark/mysqlconector/mysql-connector/mysql-connector-java-5.1.49.jar")\
+			.enableHiveSupport()\
+			.getOrCreate() 
 
-"""with open("C:DesktopProjectAlerts.sql") as Al:
+	spark.sparkContext.setLogLevel("Error")	
+	mysql_db_driver_class = "com.mysql.jdbc.Driver"	
+	table_name = "alumno"
+	host_name = "localhost"
+	port_no = str(3306)
+	user_name = "root"
+	password = "*********"
+	database_name = "itsp"
+
+	mysql_select_query = "(select * from "+table_name+") as alumnos"
+
+	mysql_jdbc_url = "jdbc:mysql://" + host_name + ":" + port_no + "/" + database_name
+
+	trans_detail_tbl_data_df = spark.read.format("jdbc") \
+		.option("url",mysql_jdbc_url) \
+		.option("driver",mysql_db_driver_class) \
+		.option("dbtable",mysql_select_query) \
+		.option("user",user_name) \
+		.option("password",password) \
+		.load()
+
+	trans_detail_tbl_data_df.show()	
+
+	
+	return HttpResponse(trans_detail_tbl_data_df.show())		   
+
+"""
+df=spark.read.csv("C:/Users/yo/Desktop/archivo.csv",header=False,sep=";")
+    	df.show()with open("C:DesktopProjectAlerts.sql") as Al:
 Alert= Al.read()
 results = sqlctx.sql(Alert)"""	
 
