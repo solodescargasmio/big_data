@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'itsp',
         'PORT' : '3306',
         'USER': 'root',
-        'PASSWORD': '***********',
+        'PASSWORD': '****',
     }
 }
 

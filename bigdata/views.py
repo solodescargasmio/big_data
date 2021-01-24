@@ -61,14 +61,14 @@ def consulta(request):
 	host_name = "localhost"
 	port_no = str(3306)
 	user_name = "root"
-	password = "*********"
+	password = "****"
 	database_name = "itsp"
 
 	mysql_select_query = "(select * from "+table_name+") as alumnos"
 
 	mysql_jdbc_url = "jdbc:mysql://" + host_name + ":" + port_no + "/" + database_name
 
-	trans_detail_tbl_data_df = spark.read.format("jdbc") \
+	df = spark.read.format("jdbc") \
 		.option("url",mysql_jdbc_url) \
 		.option("driver",mysql_db_driver_class) \
 		.option("dbtable",mysql_select_query) \
@@ -76,10 +76,14 @@ def consulta(request):
 		.option("password",password) \
 		.load()
 
-	trans_detail_tbl_data_df.show()	
-
+	df.show()
+	lista = df.select("Nombre").collect()
+	dicc=[]
+	for i in lista:
+		dicc.append(i)
+	df.select("Nombre","Apellido").show()	
 	
-	return HttpResponse(trans_detail_tbl_data_df.show())		   
+	return HttpResponse(dicc)		   
 
 """
 df=spark.read.csv("C:/Users/yo/Desktop/archivo.csv",header=False,sep=";")
