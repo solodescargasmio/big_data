@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'big_data.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'independencia_hist',
+        'NAME': '********',
         'USER': 'root',
-        'PASSWORD'    : 'Delphina2014',
+        'PASSWORD'    : '*******',
         'HOST'        : 'localhost',
         'PORT'        : '3306',
     }
