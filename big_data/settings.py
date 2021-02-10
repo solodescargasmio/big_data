@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+#sirve el de abajo o el que sigue
+BASE_DIR = Path(__file__).resolve().parent.parent #Nos da la ruta 
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -44,7 +46,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -55,7 +57,7 @@ ROOT_URLCONF = 'big_data.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS':  [os.path.join(BASE_DIR, 'bigdata/template/')],#crear lista []
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,10 +79,11 @@ WSGI_APPLICATION = 'big_data.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'itsp',
-        'PORT' : '3306',
+        'NAME': 'independencia_hist',
         'USER': 'root',
-        'PASSWORD': '****',
+        'PASSWORD'    : 'Delphina2014',
+        'HOST'        : 'localhost',
+        'PORT'        : '3306',
     }
 }
 
@@ -122,3 +125,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_DIR = (os.path.join(BASE_DIR,'bigdata/static/'))

@@ -1,9 +1,11 @@
 
 from django.urls import path
-from .views import inicio,pi,consulta
+from .views import inicio,consulta,mostrar,principal
 
 urlpatterns = [
-   path('inicio/',inicio),
-   path('pi/',pi),
+   path('inicio/',principal),
    path('consulta/',consulta),
+   path('inicio/mostrar/',mostrar),
+   path('prueba/',principal),
+   
 ]
